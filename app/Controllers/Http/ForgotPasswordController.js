@@ -1,7 +1,7 @@
 'use strict'
 
 const crypto = require('crypto')
-
+const Mail = require('Mail')
 const User = use('App/Models/User')
 
 class ForgotPasswordController {
@@ -13,7 +13,20 @@ class ForgotPasswordController {
       user.token = crypto.randomBytes(10).toString('hex')
       user.token_created_at = new Date()
 
-      return user.save()
+      await user.save()
+      await Mail.send(
+        ['emails.forgot_password'],
+        {
+          email,
+          token: user.token,
+          link: `${request.input('redirect_url')}?token=${user.token}`
+        },
+        message => {
+          message
+            .to(user.mail)
+            .from('stephano.grp@gmail.com', 'Stéphano')
+            .subject('Recuperação de senha')
+      })
     } catch (error) {
       return response
       .status(error.status)

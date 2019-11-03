@@ -90,3 +90,7 @@ To see all endpoints, run the following command.
 ```js
 adonis route:list
 ```
+
+### Collection
+
+See assets folder

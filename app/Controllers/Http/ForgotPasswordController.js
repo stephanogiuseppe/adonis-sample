@@ -2,7 +2,7 @@
 
 const crypto = require('crypto')
 const moment = require('moment')
-// const Mail = require('Mail')
+const Mail = require('Mail')
 const User = use('App/Models/User')
 
 class ForgotPasswordController {
@@ -15,19 +15,19 @@ class ForgotPasswordController {
       user.token_created_at = new Date()
 
       await user.save()
-      // await Mail.send(
-      //   ['emails.forgot_password'],
-      //   {
-      //     email,
-      //     token: user.token,
-      //     link: `${request.input('redirect_url')}?token=${user.token}`
-      //   },
-      //   message => {
-      //     message
-      //       .to(user.mail)
-      //       .from('stephano.grp@gmail.com', 'Stéphano')
-      //       .subject('Recuperação de senha')
-      // })
+      await Mail.send(
+        ['emails.forgot_password'],
+        {
+          email,
+          token: user.token,
+          link: `${request.input('redirect_url')}?token=${user.token}`
+        },
+        message => {
+          message
+            .to(user.mail)
+            .from('stephano.grp@gmail.com', 'Stéphano')
+            .subject('Recuperação de senha')
+      })
 
       return response
         .status(200)

@@ -33,6 +33,14 @@ Run the following command to roll back migrations.
 adonis migration:rollback
 ```
 
+### Run project
+
+Run the following command to run this project (dev mode).
+
+```js
+adonis serve --dev
+```
+
 ### Make
 
 Run the following command to create models (-m to add migration and -c to add controller).
